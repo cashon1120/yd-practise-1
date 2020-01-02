@@ -30,4 +30,8 @@ tests/_output/*
 tests/_support/_generated
 
 #vagrant folder
+<<<<<<< HEAD
 /.vagrant
+=======
+/.vagrant
+>>>>>>> f81f33e9cb2b3c994e0431443572c483a58e9088

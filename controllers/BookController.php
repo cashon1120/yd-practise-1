@@ -3,12 +3,15 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\Response;
 use yii\web\Controller;
 use yii\data\Pagination;
 use app\models\Book;
+Yii::$app->response->format=Response::FORMAT_JSON;
 
 class BookController extends Controller
 {
+    public $enableCsrfValidation=false;
     public function actionIndex()
     {
         $query = Book::find();
@@ -22,10 +25,12 @@ class BookController extends Controller
             ->limit($pagination->limit)
             ->all();
 
-        return $this->render('index', [
-            'books' => $books,
-            'pagination' => $pagination,
-        ]);
+        // return $this->render('index', [
+        //     'books' => $books,
+        //     'pagination' => $pagination,
+        // ]);
+
+        return ['code' => 1, 'msg' => 'sucess', 'list' => $books, 'pageInfo' => $pagination];
     }
 
     public function actionCreate()
@@ -41,15 +46,14 @@ class BookController extends Controller
             $model->isbn = $results->isbn;
             $model->price = $results->price;
             $model->remarks = $results->remarks;
+            return ['code' => 1, 'msg' => 'success', 'data' => $model];
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->create($id)) {
-            $this->redirect('/basic/web/index.php?r=book/success');
+        $updateId = Yii::$app->request->post('id');
+        if ($model->load(Yii::$app->request->post(), '') && $model->create($updateId)) {
+            return ['code' => 1, 'msg' => 'success'];
         }
-        return $this->render('create', [
-            'model' => $model,
-            'id' => $id
-        ]);
+        
     }
 
     public function actionSuccess()
@@ -63,6 +67,6 @@ class BookController extends Controller
         $id = $request->get('id');
         $results = Book::find()->where(['id' => $id])->one();
         $results->delete();
-        $this->redirect('/basic/web/index.php?r=book/success');
+        return ['code' => 1, 'msg' => 'success'];
     }
 }

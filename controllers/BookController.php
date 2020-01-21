@@ -37,9 +37,12 @@ class BookController extends Controller
     {
         $request = YII::$app->request;
         $id = $request->get('id');
-        $results = Book::find()->where(['id' => $id])->one();
         $model = new Book();
         if ($id) {
+            $results = Book::find()->where(['id' => $id])->one();
+            if(!$results){
+                return ['code' => 0, 'msg' => '抱歉, 没找到相应数据'];
+            }
             $model->id = $id;
             $model->name = $results->name;
             $model->author = $results->author;

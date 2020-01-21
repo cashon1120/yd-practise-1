@@ -2,13 +2,17 @@
 
 namespace app\models;
 
+use Yii;
+use yii\web\Response;
+Yii::$app->response->format=Response::FORMAT_JSON;
+
 class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 {
+    public $enableCsrfValidation=false;
     public $id;
     public $username;
     public $password;
-    public $authKey;
-    public $accessToken;
+
 
     private static $users = [
         '100' => [
@@ -26,7 +30,6 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
             'accessToken' => '101-token',
         ],
     ];
-
 
     /**
      * {@inheritdoc}

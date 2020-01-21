@@ -48,6 +48,7 @@ class BookController extends Controller
             $model->author = $results->author;
             $model->isbn = $results->isbn;
             $model->price = $results->price;
+            $model->pic = $results->pic;
             $model->remarks = $results->remarks;
             return ['code' => 1, 'msg' => 'success', 'data' => $model];
         }

@@ -22,6 +22,7 @@ class Book extends ActiveRecord
       ['author', 'required', 'message' => '作者不能为空'],
       ['isbn', 'required', 'message' => 'ISBN不能为空'],
       ['price', 'required', 'message' => '价格不能为空'],
+      ['pic', 'required', 'message' => '图片不能为空'],
       ['remarks', 'required', 'message' => '备注不能为空']
     ];
   }
@@ -38,6 +39,7 @@ class Book extends ActiveRecord
         $results->author = $model->author;
         $results->isbn = $model->isbn;
         $results->price = $model->price;
+        $results->pic = $model->pic;
         $results->remarks = $model->remarks;
         $results->update();
         return true;
